@@ -18,6 +18,11 @@ router.get("/user/:id", async (req, res) =>{
 
 //create the user data
 router.post("/user/newUser", async (req, res) =>{
+    let user = await model.find({ "UserLogin.emailId": req.body
+    .UserLogin.emailId });
+if (user) { return res.status(403).send({message:"emailId already exist"})
+}
+
     let { error } = ValidationError(req.body);
     if (error) { return res.send(error.details[0].message) };
     let newData = new model({
